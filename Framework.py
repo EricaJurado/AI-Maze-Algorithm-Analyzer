@@ -1,6 +1,3 @@
-import random
-
-
 def Main(startSize, endSize, jumpSize):
 
     #while (startSize < endSize):
