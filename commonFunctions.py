@@ -4,10 +4,12 @@ def calculateH(node, goal):
 	return H
 
 def getNeighbours(currentNode, dimension):
-	point = currentNode[0]
-	x = point[0]
-	y = point[1]
+	# Gets neighbours in the cardinal directions of the given node.
+	x = currentNode[0]
+	y = currentNode[1]
+
 	neighbours = []
+	# Ensures that coordinates outside of the maze can not be counted as neighbours since they do not exist.
 	if x>0:
 		neighbours.append((x-1,y))
 	if x<dimension-1:

@@ -1,5 +1,6 @@
 from primMazeGen import Prim
 from aStar import aStar
+from UniformCostDijkstra import UniformCostDijkstra
 
 def Main(startSize, endSize, jumpSize):
 
@@ -9,9 +10,8 @@ def Main(startSize, endSize, jumpSize):
     start = mazeInfo[0]
     end = mazeInfo[1]
     maze = mazeInfo[2]
-    print maze
-    print start
-    print end
-    aStar(start,end,maze)
+    #aStar(start,end,maze)
+    result = UniformCostDijkstra(start, end, maze)
+    print result
 
 Main(4, 4, 0)
