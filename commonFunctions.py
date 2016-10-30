@@ -1,4 +1,5 @@
 def calculateH(node, goal):
+	# Heuristic cost is based on (Manhattan) distance from exit.
 	H = abs(node[0]-goal[0]) + abs(node[1]-goal[1])
 	return H
 

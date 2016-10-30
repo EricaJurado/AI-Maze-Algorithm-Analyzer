@@ -20,6 +20,11 @@ class Tree:
                     return child
             return None
 
+        def removeChild(self,node):
+            for child in self.children:
+                if child.data == str(node):
+                    self.children.remove(child)
+
         def __repr__(self):
             """ Returns a string containing printable representation of our Node. """
             return self.data

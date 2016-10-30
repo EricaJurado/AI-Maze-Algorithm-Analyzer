@@ -1,3 +1,6 @@
+from primMazeGen import Prim
+from aStar import aStar
+
 def Main(startSize, endSize, jumpSize):
 
     #while (startSize < endSize):
@@ -7,6 +10,8 @@ def Main(startSize, endSize, jumpSize):
     end = mazeInfo[1]
     maze = mazeInfo[2]
     print maze
+    print start
+    print end
     aStar(start,end,maze)
 
-#Main(4, 4, 0)
+Main(4, 4, 0)

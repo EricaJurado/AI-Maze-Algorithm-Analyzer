@@ -16,14 +16,14 @@ def Prim(size):
 	i = size
 	j = size
 	# Initializes walls. Note that initally all cells are walls
-	grid = [[[(i,j),True] for i in range(size)] for j in range(size)] #True=wall or nontraversable, False=passage or traversable
+	grid = [[[(j,i),True] for i in range(size)] for j in range(size)] #True=wall or nontraversable, False=passage or traversable
 
 	# Picks an starting point at some cell in the maze.
 	x = random.randint(0, size-1)
 	y = random.randint(0, size-1)
 	frontiers = [(x,y,x,y)]
-	startNode = (x,y)
-	endNode = (x,y)
+	
+	passages = []
 
 	while (len(frontiers) > 0):
 		# Chooses a random index in our list of frontiers.
@@ -31,14 +31,17 @@ def Prim(size):
 
 		# Gets the element in the random index we've selected.
 		f = frontiers[index]
+		del frontiers[index]
 		x = f[2]
 		y = f[3]
 
 		# Checks if the element we've selected in a wall or not.
 		if (grid[x][y][1] == True):
 			# Turn that wall into a passageway
-			grid[f[0]][f[1]][1] = False
 			grid[x][y][1] = False
+			grid[f[0]][f[1]][1] = False
+			passages.append((x,y))
+			#passages.append((f[1],f[x]))
 
 			# Now that we've updated the passageways, we'll need to add the frontiers of this new pasageway to our list.
 			if ( x >= 2 and grid[x-2][y][1] == True):
@@ -50,11 +53,9 @@ def Prim(size):
 			if ( y < size-2 and grid[x][y+2][1] == True):
 				frontiers.append((x, y+1, x, y+2))
 
-		# Our end node is updated. Our pathfinding algorithms will need to know the end node so if they reach it they'll know they were successful.
-		endNode = (x,y)
-
 		# Since the node is no longer a fronter, we need to delete it from the list.
-		del frontiers[index]
 
+	startNode = passages[0]
+	endNode = passages[-1]
 	# Returns our starting node, our ending node, and the maze itself.
 	return (startNode, endNode, grid)
