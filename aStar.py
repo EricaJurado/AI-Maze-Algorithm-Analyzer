@@ -9,8 +9,8 @@ def aStar(start, goal, maze):
 
 	# Hcost is the heuristic cost of a node to the goal (Manhattan distance is used).
 	Hcost = calculateH(start, goal)
-
-	start = [start, 0, Hcost]
+	path = []
+	start = [start, 0, Hcost, path]
 
 	#point, g cost (distance from starting node/distance travelled), h cost (distance from end node)
 	openList.append(start)
@@ -29,6 +29,9 @@ def aStar(start, goal, maze):
 	 		if (node[1]+node[2]) < (current[1]+current[2]):
 	 			current = node
 
+	 	path  = current[3]
+	 	path = path + [current[0]]
+
 	 	# Then remove the node with the lowest cost from the lowest list.
 	 	openList.remove(current)
 	 	# And add this node to the closed list since we've evaluated it.
@@ -42,16 +45,15 @@ def aStar(start, goal, maze):
 
 	 	# If the current node is the goal, we know that we've found out path.
 	 	if current[0] == goal:
-	 		#print current.parent
-	 		return
+	 		return path
 
 	 	# Get the neighbours of our current node.
-	 	neighbours = getNeighbours(current, dimension)
+	 	neighbours = getNeighbours(current[0], dimension)
 	 	
 	 	# Then loop through the neighbours
 	 	for neighbour in neighbours:
 	 		Hcost = calculateH(neighbour, goal)
-	 		neighbour = [neighbour, currentGCost+1, Hcost]
+	 		neighbour = [neighbour, currentGCost+1, Hcost, path]
 	 		x = neighbour[0][0]
 	 		y = neighbour[0][1]
 
@@ -71,20 +73,23 @@ def aStar(start, goal, maze):
 	 			newPathCost = currentGCost + 1 #gcost of previous node plus cost of travel
 	 			oldGCost = -1
 
-	 			# See if newpath is shorter than existing path
+	 			# See if newpath is shorter than existing path by looking at the old Gcost.
 	 			for node in openList:
 	 				if node[0]==(x,y):
 	 				 	oldGCost = node[1]
 
+	 			# Check and see if node is in the openList
 	 			inOpen = False
 	 			for openNode in openList:
-	 				if openNode == current:
+	 				if openNode[0] == current[0]:
 	 					inOpen = True
 
+	 			# If the new path to the node is less than the old cost or if it's in open
 	 			if newPathCost < oldGCost or inOpen:
+	 				# Remove it from the openList and set newNode
 	 				openList.remove(node)
 	 				newNode = [node[0], newPathCost, node[2]]
-	 				newNode.parent = currentNode
+	 				#newNode.parent = currentNode
 
 	 			if inOpen == False:
 	 				openList.append(neighbour)
