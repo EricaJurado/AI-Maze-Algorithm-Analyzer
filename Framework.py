@@ -10,7 +10,9 @@ def Main(startSize, endSize, jumpSize):
     start = mazeInfo[0]
     end = mazeInfo[1]
     maze = mazeInfo[2]
-    aStar(start,end,maze)
-    UniformCostDijkstra(start, end, maze)
+    path = aStar(start,end,maze)
+    # print path
+    path = UniformCostDijkstra(start,end,maze)
+    # print path
 
 Main(5, 5, 0)

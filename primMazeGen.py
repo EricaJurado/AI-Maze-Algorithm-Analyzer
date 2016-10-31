@@ -41,7 +41,6 @@ def Prim(size):
 			grid[x][y][1] = False
 			grid[f[0]][f[1]][1] = False
 			passages.append((x,y))
-			#passages.append((f[1],f[x]))
 
 			# Now that we've updated the passageways, we'll need to add the frontiers of this new pasageway to our list.
 			if ( x >= 2 and grid[x-2][y][1] == True):
