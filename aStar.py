@@ -8,7 +8,7 @@ def aStar(start, goal, maze):
 	closedList = [] #set of nodes already evaluated
 
 	# Hcost is the heuristic cost of a node to the goal (Manhattan distance is used).
-	Hcost = calculateH(start, goal)
+	Hcost = maze[start[0]][start[1]][2]
 	path = []
 	start = [start, 0, Hcost, path]
 
@@ -52,7 +52,7 @@ def aStar(start, goal, maze):
 	 	
 	 	# Then loop through the neighbours
 	 	for neighbour in neighbours:
-	 		Hcost = calculateH(neighbour, goal)
+	 		Hcost = maze[neighbour[0]][neighbour[1]][2]
 	 		neighbour = [neighbour, currentGCost+1, Hcost, path]
 	 		x = neighbour[0][0]
 	 		y = neighbour[0][1]

@@ -1,4 +1,5 @@
 import random
+from commonFunctions import calculateH
 
 def Prim(size):
 	"""
@@ -16,7 +17,7 @@ def Prim(size):
 	i = size
 	j = size
 	# Initializes walls. Note that initally all cells are walls
-	grid = [[[(j,i),True] for i in range(size)] for j in range(size)] #True=wall or nontraversable, False=passage or traversable
+	grid = [[[(j,i),True,-1] for i in range(size)] for j in range(size)] #True=wall or nontraversable, False=passage or traversable
 
 	# Picks an starting point at some cell in the maze.
 	x = random.randint(0, size-1)
@@ -56,5 +57,11 @@ def Prim(size):
 
 	startNode = passages[0]
 	endNode = passages[-1]
+
+	for row in grid:
+		for cell in row:
+			if cell[1] == False:
+				Hcost = calculateH(cell[0], endNode)
+				cell = [cell[0], cell[1], Hcost]
 	# Returns our starting node, our ending node, and the maze itself.
 	return (startNode, endNode, grid)
