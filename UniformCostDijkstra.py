@@ -30,14 +30,16 @@ def UniformCostDijkstra(start, goal, maze):
 
 		# Get the neighbours and iterate through them.
 		for neighbour in getNeighbours(node,dimension):
-			# Calculate basic cost
-			neighbourcost = 1
-			if neighbour == goal:
-				neighbourcost = 0
+			if maze[neighbour[0]][neighbour[1]][1] == False:
+	
+				# Calculate basic cost
+				neighbourcost = 1
+				if neighbour == goal:
+					neighbourcost = 0
 
-			# If the neighbour has not been explored, add to heap.
-			if neighbour not in explored:
-				heapq.heappush(frontier, (cost+neighbourcost, neighbour, path))
+				# If the neighbour has not been explored, add to heap.
+				if neighbour not in explored:
+					heapq.heappush(frontier, (cost+neighbourcost, neighbour, path))
 
 		# Add the node to the explored items. 
 		explored[node] = cost
