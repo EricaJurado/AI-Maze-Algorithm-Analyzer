@@ -10,6 +10,10 @@ from Stats import mean
 import csv
 
 def Main(startSize, endSize, jumpSize):
+    """
+    this function generates the actual maze and 
+    then runs each of the algorithms through the maze
+    """
     mazeInfo = Prim(startSize)
     start = mazeInfo[0]
     end = mazeInfo[1]
@@ -29,11 +33,17 @@ def Main(startSize, endSize, jumpSize):
 
     return(total_times)
 
+
+#these are the only variables that would
+#ever need to be changed when running this code
 startSize = 5
 endSize = 20
 jumpSize = 5 
 i=0
 
+
+#the following bunches of lists are used for 
+#statistics and CSV outputs
 aStar_raw_data = []   
 BFS_raw_data = []
 DFS_raw_data = []
@@ -49,6 +59,9 @@ UniformCostDijkstra_Stats_clean = []
 BFS_Stats_clean = []
 DFS_Stats_clean = []
 
+
+
+#this is the main loop that runs the entire program
 while startSize <= endSize:
     while i < 20:
         total_times = Main(startSize,endSize,jumpSize)
@@ -67,17 +80,21 @@ while startSize <= endSize:
         i+=1
     i=0  
 
-    #stats!
-
+    
+    #this is to sort all of the lists of times for median calculations
     aStar_Stats.sort()
     UniformCostDijkstra_Stats.sort()
     BFS_Stats.sort()
     DFS_Stats.sort()
 
+
+    #this is where the statistics are calculated 
+    #the mean and median functions are helper functions in the stat file
     aStar_Stats_clean.append([startSize, "aStar", mean(aStar_Stats), median(aStar_Stats)])
     UniformCostDijkstra_Stats_clean.append([startSize, "Dijkstra", mean(UniformCostDijkstra_Stats), median(UniformCostDijkstra_Stats)])
     BFS_Stats_clean.append([startSize, "BFS", mean(BFS_Stats), median(BFS_Stats)])
     DFS_Stats_clean.append([startSize, "DFS", mean(DFS_Stats), median(DFS_Stats)])
+
 
 
     with open("clean_data.csv", "ab") as fi:
@@ -87,6 +104,8 @@ while startSize <= endSize:
         writer.writerows(BFS_Stats_clean)
         writer.writerows(DFS_Stats_clean)
 
+
+        
     with open("raw_data_file.csv", "ab") as f:
         writer = csv.writer(f, delimiter= ",", lineterminator = "\n")
         writer.writerows(aStar_raw_data)
